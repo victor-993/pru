@@ -5,6 +5,6 @@ class Group(Document):
     meta = {
         'collection': 'group'
     }
-    group_name = StringField(max_length=255, required=True)
+    group_name = StringField(max_length=150, required=True)
     crop = ReferenceField(Crop, required=True)
-    ext_id = StringField(max_length=100)
+    ext_id = StringField(max_length=100, required=True)
