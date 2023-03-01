@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="orm_gap",
+    name="ormgap",
     version="0.0.1",
     author="victor993",
     author_email="v.hernandez@cgiar.com",
