@@ -1,6 +1,27 @@
 from mongoengine import Document, StringField
 
 class Crop(Document):
+    """
+    Represents a crop in the database.
+
+    Attributes:
+    ----------
+    ext_id : str
+        External ID of the crop. Mandatory and unique.
+    name : str
+        Name of the crop. Mandatory.
+    base_name : str
+        Base name of the crop.
+    app_name : str
+        Application name of the crop.
+
+    Methods:
+    -------
+    save()
+        Saves the Crop object to the database.
+    delete()
+        Deletes the Crop object from the database.
+    """
     meta = {
         'collection': 'crop'
     }

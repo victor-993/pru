@@ -3,6 +3,37 @@ from .crop import Crop
 from .group import Group
 
 class Accession(Document):
+    """"
+    Represents an accession in the database.
+
+    Attributes:
+    ----------
+    species_name : str
+        Name of the species of the accession. Optional.
+    crop : Crop
+        Crop object, Crop to which the accession belongs. Mandatory.
+    landrace_group : Group
+        Group object, Landrace group to which the accession belongs. Mandatory.
+    institution_name : str
+        Name of the institution that holds the accession. Optional.
+    source_database : str
+        Name of the database where the accession was originally stored. Optional.
+    latitude : float
+        Latitude of the geographical location where the accession was collected. Optional.
+    longitude : float
+        Longitude of the geographical location where the accession was collected. Optional.
+    accession_id : str
+        Unique identifier of the accession. Optional.
+    other_attributes : dict
+        Additional attributes of the accession. Optional.
+
+    Methods:
+    -------
+    save()
+        Saves the Accession object to the database.
+    delete()
+        Deletes the Accession object from the database.
+    """
     meta = {
         'collection': 'accession'
     }
