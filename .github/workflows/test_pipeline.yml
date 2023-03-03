@@ -72,6 +72,15 @@ jobs:
     - uses: actions/checkout@v3
       with:
         fetch-depth: '0'
+    # API Zip
+    - name: Zip artifact for deployment
+      run: zip releaseORM.zip ./ormgap/* -r
+    # Upload Artifacts
+    - name: Upload ORM artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: ORM
+        path: releaseORM.zip
     # Generate Tagname
     - name: Generate Tagname for release
       id: taggerDryRun
@@ -83,29 +92,6 @@ jobs:
         DEFAULT_BUMP: patch
         RELEASE_BRANCHES : stage,main
         BRANCH_HISTORY: last
-    # Update setup.py
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Update version
-      run: |
-        sed -i "s/version='.*'/version='${{ steps.taggerDryRun.outputs.new_tag }}'/" setup.py
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Update version to ${{ steps.taggerDryRun.outputs.new_tag }}"
-        commit_options: "--author 'GitHub Actions <actions@github.com>'"
-        branch: ${{ github.ref }}
-    # API Zip
-    - name: Zip artifact for deployment
-      run: zip releaseORM.zip ./ormgap/* -r
-    # Upload Artifacts
-    - name: Upload ORM artifact for deployment job
-      uses: actions/upload-artifact@v3
-      with:
-        name: ORM
-        path: releaseORM.zip
     # Create release
     - name: Create Release
       id: create_release
@@ -132,3 +118,23 @@ jobs:
         asset_content_type: application/zip
 
 # ------- END RELEASE PROCCESS -------- #
+
+# ---------- Start update-version ----------#
+
+  update-version:
+    needs: PostRelease
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Update version
+        run: |
+          sed -i "s/version='.*'/version='$(echo ${{ github.ref }} | sed 's/\//\\\//g')'/" setup.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "Update version to ${{ github.ref }}"
+          commit_options: "--author 'GitHub Actions <actions@github.com>'"
+          branch: ${{ github.ref }}
