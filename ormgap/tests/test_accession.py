@@ -1,17 +1,39 @@
-from mongoengine import Document, StringField, ReferenceField, FloatField
-from .test_crop import Crop
-from .test_group import Group
+import unittest
+from mongoengine import connect
+from orm.models.accession import Accession
+from orm.models.crop import Crop
+from orm.models.group import Group
 
-class Accession(Document):
-    meta = {
-        'collection': 'accession'
-    }
-    species_name = StringField(max_length=150, required=True)
-    crop = ReferenceField(Crop, required=True)
-    landrace_group = ReferenceField(Group, required=True)
-    institution_name = StringField(max_length=255)
-    source_database = StringField(max_length=255)
-    latitude = FloatField()
-    longitude = FloatField()
-    accession_id = StringField(max_length=255)
-    other_attributes = StringField()
+class AccessionTestCase(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        connect('test_gap_analysis', host='mongomock://localhost')
+
+    def setUp(self):
+        self.crop = Crop(name='Test Crop', base_name='Test Crop Base', app_name='Test Crop App').save()
+        self.group = Group(group_name='Test Group', crop=self.crop).save()
+        self.accession = Accession(
+            species_name='Test Species', 
+            crop=self.crop, 
+            landrace_group=self.group, 
+            institution_name='ICARDA',
+            source_database='GENESYS',
+            latitude=40.7128,
+            longitude=-74.0060,
+            accession_id='12345'
+        )
+
+    def test_create_accession(self):
+        self.accession.save()
+        self.assertIsNotNone(self.accession.id)
+
+        accession = Accession.objects(id=self.accession.id).first()
+        self.assertEqual(accession.crop.id, self.crop.id)
+        self.assertEqual(accession.landrace_group.id, self.group.id)
+        self.assertEqual(accession.latitude, 40.7128)
+        self.assertEqual(accession.longitude, -74.0060)
+
+    def tearDown(self):
+        self.crop.delete()
+        self.group.delete()
+        Accession.objects.delete()
