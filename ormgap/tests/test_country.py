@@ -3,12 +3,9 @@ from mongoengine import connect
 from orm.models.country import Country
 
 class TestCountry(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        # Conecta con la base de datos de prueba
-        connect('test_gap_analysis', host='mongomock://localhost')
 
     def setUp(self):
+        connect('test_gap_analysis', host='mongomock://localhost')
         self.country = Country(
             iso_2='US',
             name='United States of America'
