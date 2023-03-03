@@ -23,6 +23,8 @@ class TestCountry(unittest.TestCase):
         self.country.save()
         self.assertIsNotNone(self.country.id)
 
+        print(self.country)
+
         # Verifica que el country haya sido creado exitosamente
         country = Country.objects(id=self.country.id).first()
         self.assertEqual(country.iso_2, 'US')

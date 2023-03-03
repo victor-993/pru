@@ -26,6 +26,8 @@ class TestCrop(unittest.TestCase):
         self.crop.save()
         self.assertIsNotNone(self.crop.id)
 
+        print(self.crop)
+
         # Verifica que el crop haya sido creado exitosamente
         crop = Crop.objects(id=self.crop.id).first()
         self.assertEqual(crop.ext_id, '1234')
