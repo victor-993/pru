@@ -118,3 +118,23 @@ jobs:
         asset_content_type: application/zip
 
 # ------- END RELEASE PROCCESS -------- #
+
+# ---------- Start update-version ----------#
+
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Update version
+        run: |
+          sed -i "s/version='.*'/version='${{ github.ref }}'/" setup.py
+        commit_message: "Update version to ${{ github.ref }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: ${{ env.commit_message }}
+          commit_options: "--author 'GitHub Actions <actions@github.com>'"
+          branch: ${{ github.ref }}
