@@ -43,20 +43,20 @@ jobs:
 
 # ------- START MERGE PROCCESS -------- #
 
-  MergeMasterORM:
+  MergeMainORM:
     needs: [TestORM]
-    name: Merge Stage with Master
+    name: Merge Stage with Main
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
 
-      - name: Merge stage -> master
+      - name: Merge stage -> main
         uses: devmasx/merge-branch@master
         with:
           type: now
           head_to_merge: ${{ github.ref }}
-          target_branch: master
+          target_branch: main
           github_token: ${{ github.token }}
 
 # ------- END MERGE PROCCESS -------- #
@@ -64,7 +64,7 @@ jobs:
 # ------- START RELEASE PROCCESS -------- #
 
   PostRelease:
-    needs: MergeMasterORM
+    needs: MergeMainORM
     name: Create Release
     runs-on: ubuntu-latest
     permissions: write-all
@@ -90,7 +90,7 @@ jobs:
         WITH_V: true
         DRY_RUN: true
         DEFAULT_BUMP: patch
-        RELEASE_BRANCHES : stage,master
+        RELEASE_BRANCHES : stage,main
         BRANCH_HISTORY: last
     # Create release
     - name: Create Release
