@@ -122,6 +122,7 @@ jobs:
 # ---------- Start update-version ----------#
 
   update-version:
+    needs: PostRelease
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
