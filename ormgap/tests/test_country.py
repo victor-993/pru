@@ -27,3 +27,6 @@ class TestCountry(unittest.TestCase):
     
     def tearDown(self):
         Country.objects.delete()
+
+if __name__ == '__main__':
+    unittest.main()
