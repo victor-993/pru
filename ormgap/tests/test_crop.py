@@ -10,10 +10,9 @@ from mongoengine import connect
 from orm.models.crop import Crop
 
 class TestCrop(unittest.TestCase):
-    def setUpClass(cls):
-        connect('test_gap_analysis', host='mongomock://localhost')
 
     def setUp(self):
+        connect('test_gap_analysis', host='mongomock://localhost')
         self.crop = Crop(
             ext_id='1234',
             name='corn',
