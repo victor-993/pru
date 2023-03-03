@@ -92,11 +92,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: "Update version to ${{ steps.taggerDryRun.outputs.new_tag }}"
-        commit_options: "--author 'GitHub Actions <actions@github.com>'"
-        branch: ${{ github.ref }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Update version to ${{ steps.taggerDryRun.outputs.new_tag }}"
+          git push
     # API Zip
     - name: Zip artifact for deployment
       run: zip releaseORM.zip ./ormgap/* -r
