@@ -1,4 +1,11 @@
 import unittest
+import sys
+import os
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+orm_dir_path = os.path.abspath(os.path.join(dir_path, '..'))
+sys.path.append(orm_dir_path)
+
 from mongoengine import connect
 from orm.models.accession import Accession
 from orm.models.crop import Crop
@@ -25,6 +32,7 @@ class AccessionTestCase(unittest.TestCase):
 
     def test_create_accession(self):
         self.accession.save()
+        print(self.accession)
         self.assertIsNotNone(self.accession.id)
 
         accession = Accession.objects(id=self.accession.id).first()
