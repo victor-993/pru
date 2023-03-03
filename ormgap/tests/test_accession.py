@@ -45,3 +45,6 @@ class AccessionTestCase(unittest.TestCase):
         self.crop.delete()
         self.group.delete()
         Accession.objects.delete()
+
+if __name__ == '__main__':
+    unittest.main()
