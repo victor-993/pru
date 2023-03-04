@@ -119,6 +119,8 @@ jobs:
     # update version setup.py
     - name: Checkout code
       uses: actions/checkout@v2
+      with:
+        ref: main
     - name: Update version
       run: |
         sed -i "s/version='.*'/version='${{ steps.taggerDryRun.outputs.new_tag }}'/" setup.py
