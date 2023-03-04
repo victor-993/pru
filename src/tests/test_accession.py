@@ -7,9 +7,9 @@ orm_dir_path = os.path.abspath(os.path.join(dir_path, '..'))
 sys.path.append(orm_dir_path)
 
 from mongoengine import connect
-from orm.models.accession import Accession
-from orm.models.crop import Crop
-from orm.models.group import Group
+from ormgap.models.accession import Accession
+from ormgap.models.crop import Crop
+from ormgap.models.group import Group
 
 class AccessionTestCase(unittest.TestCase):
     @classmethod
