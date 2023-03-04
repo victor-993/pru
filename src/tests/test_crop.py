@@ -7,7 +7,7 @@ orm_dir_path = os.path.abspath(os.path.join(dir_path, '..'))
 sys.path.append(orm_dir_path)
 
 from mongoengine import connect
-from orm.models.crop import Crop
+from ormgap.models.crop import Crop
 
 class TestCrop(unittest.TestCase):
 
