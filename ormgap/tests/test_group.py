@@ -25,9 +25,9 @@ class TestGroup(unittest.TestCase):
         self.assertIsNotNone(self.group.id)
 
         group = Group.objects(id=self.crop.id).first()
-        self.assertEqual(group.group_name,'Landraces of corn')
+        self.assertEqual(group.group_name, 'Landraces of corn')
         self.assertEqual(group.crop, self.crop)        
-        self.assertEqual(group.ext_id,'1234')
+        self.assertEqual(group.ext_id, '1234')
 
     def tearDown(self):
         self.crop.delete()
