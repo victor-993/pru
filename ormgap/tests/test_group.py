@@ -25,9 +25,9 @@ class TestGroup(unittest.TestCase):
         self.group.save()
         self.assertIsNotNone(self.group.id)
 
-        group = Group.objects(id=self.crop.id).first()
+        group = Group.objects(id=self.group.id).first()
         print(group)
-        #self.assertEqual(group.group_name, 'Landraces of corn')
+        self.assertEqual(group.group_name, 'Landraces of corn')
         self.assertEqual(group.crop, self.crop)        
         self.assertEqual(group.ext_id, '1234')
 
