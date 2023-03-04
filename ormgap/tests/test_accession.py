@@ -17,9 +17,9 @@ class AccessionTestCase(unittest.TestCase):
         connect('test_gap_analysis', host='mongomock://localhost')
 
     def setUp(self):
-        self.crop = Crop(name='Test Crop', base_name='Test Crop Base', app_name='Test Crop App').save()
+        self.crop = Crop(name='Test Crop', base_name='Test Crop Base', app_name='Test Crop App', ext_id='1234').save()
         self.assertIsNotNone(self.crop.id)
-        self.group = Group(group_name='Test Group', crop=self.crop).save()
+        self.group = Group(group_name='Test Group', crop=self.crop, ext_id='12345').save()
         self.assertIsNotNone(self.group.id)
         self.accession = Accession(
             species_name='Test Species', 
