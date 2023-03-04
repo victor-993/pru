@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="resampling",
-    version='0.0.20',
+    name="ormgap",
+    version='v0.0.16',
     author="victor993",
     author_email="v.hernandez@cgiar.com",
     description="ORM para la base de datos de gap analysis",
