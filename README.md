@@ -17,6 +17,10 @@ To use this ORM, it is necessary to have an instance of MongoDB running.
 
 - Python 3.x
 - MongoDB
+- dnspython 2.3.0
+- mongoengine 0.26.0
+- pymongo 4.3.3
+- mongomock 4.1.2
 
 ## Usage
 
