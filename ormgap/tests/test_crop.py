@@ -37,3 +37,6 @@ class TestCrop(unittest.TestCase):
 
     def tearDown(self):
         Crop.objects.delete()
+
+    if __name__ == '__main__':
+        unittest.main()
