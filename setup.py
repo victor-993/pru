@@ -8,7 +8,8 @@ setup(
     description="ORM para la base de datos de gap analysis",
     url="https://github.com/victor-993/pru",
     download_url="https://github.com/victor-993/pru",
-    packages=find_packages(),
+    packages=find_packages('src'),
+    package_dir={'':'src'},
     keywords='mongodb orm gap-analysis',
     classifiers=[
         "Programming Language :: Python :: 3",
