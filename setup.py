@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ormgap",
-    version='refs/heads/stage',
+    version='v0.0.15',
     author="victor993",
     author_email="v.hernandez@cgiar.com",
     description="ORM para la base de datos de gap analysis",
