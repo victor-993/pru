@@ -13,7 +13,7 @@ from orm.models.crop import Crop
 class TestGroup(unittest.TestCase):
     def setUp(self):
         connect('test_gap_analysis', host='mongomock://localhost')
-        self.crop = Crop(name='Test Crop', base_name='Test Crop Base', app_name='Test Crop App').save()
+        self.crop = Crop(name='Test Crop', base_name='Test Crop Base', app_name='Test Crop App', ext_id='1234' ).save()
         self.group = Group(
             group_name='Landraces of corn',
             crop=self.crop,
