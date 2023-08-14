@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'resampling=ormgap.resampling.scripts.resampling:main',
+            'resampling=resampling.scripts.resampling:main',
         ],
     },
 )
