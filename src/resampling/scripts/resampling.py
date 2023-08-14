@@ -1,6 +1,6 @@
 import os
 import argparse
-from ..modulos.algo import funcion
+#from resampling.modulos.algo import *
 
 def main():
     cwd = os.getcwd()
@@ -18,7 +18,7 @@ def main():
     print("Reading inputs")
     print(args)
 
-    print( funcion(args.country, args.path, args.prev_months, args.cores, args.forecast_year))
+    #print( funcion(args.country, args.path, args.prev_months, args.cores, args.forecast_year))
 
     # country = args.country
     # path = args.path
