@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="ormgap",
+    name="resampling",
     version='v0.0.21',
     author="victor993",
     author_email="v.hernandez@cgiar.com",
