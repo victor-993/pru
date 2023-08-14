@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="ormgap",
+    name="resampling",
     version='0.0.3',
     author="victor993",
     author_email="v.hernandez@cgiar.com",
@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'resampling=ormgap.resampling.scripts.resampling:main',
+            'resampling=resampling.scripts.resampling:main',
         ],
     },
 )
