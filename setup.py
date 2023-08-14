@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="ormgap",
-    version='v0.0.15',
+    name="resampling",
+    version='0.0.15',
     author="victor993",
     author_email="v.hernandez@cgiar.com",
     description="ORM para la base de datos de gap analysis",
@@ -22,7 +22,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'resampling=ormgap.resampling.scripts.resampling:main',
+            'resampling=resampling.scripts.resampling:main',
         ],
     },
 )
