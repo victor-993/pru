@@ -19,5 +19,10 @@ setup(
     python_requires=">=3.6",
     install_requires=[
         "mongoengine"
-    ]
+    ],
+    entry_points={
+        'console_scripts': [
+            'resampling=ormgap.resampling.scripts.resampling:main',
+        ],
+    },
 )
