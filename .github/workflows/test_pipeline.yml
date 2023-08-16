@@ -64,7 +64,7 @@ jobs:
 # ------- START RELEASE PROCCESS -------- #
 
   PostRelease:
-    needs: MergeMainORM
+    needs: [TestORM, MergeMainORM]
     name: Create Release
     runs-on: ubuntu-latest
     permissions: write-all
@@ -116,6 +116,8 @@ jobs:
         asset_path: ./releaseORM.zip
         asset_name: releaseORM.zip
         asset_content_type: application/zip
+    - name: Get Test Status
+      run: echo "tests-successful=${{ needs.TestScripts.outputs.tests-successful }}" >> $GITHUB_ENV
     # update version setup.py
     - name: Checkout code
       uses: actions/checkout@v3
