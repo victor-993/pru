@@ -44,7 +44,7 @@ jobs:
 # ------- START MERGE PROCCESS -------- #
 
   MergeMainORM:
-    needs: [TestORM]
+    needs: TestORM
     name: Merge Stage with Main
     permissions: write-all
     runs-on: ubuntu-latest
@@ -64,7 +64,7 @@ jobs:
 # ------- START RELEASE PROCCESS -------- #
 
   PostRelease:
-    needs: [TestORM, MergeMainORM]
+    needs: MergeMainORM
     name: Create Release
     runs-on: ubuntu-latest
     permissions: write-all
@@ -116,8 +116,6 @@ jobs:
         asset_path: ./releaseORM.zip
         asset_name: releaseORM.zip
         asset_content_type: application/zip
-    - name: Get Test Status
-      run: echo "tests-successful=${{ needs.TestScripts.outputs.tests-successful }}" >> $GITHUB_ENV
     # update version setup.py
     - name: Checkout code
       uses: actions/checkout@v3
