@@ -44,7 +44,7 @@ jobs:
 # ------- START MERGE PROCCESS -------- #
 
   MergeMainORM:
-    needs: [TestORM]
+    needs: TestORM
     name: Merge Stage with Main
     permissions: write-all
     runs-on: ubuntu-latest
