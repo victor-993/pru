@@ -116,7 +116,7 @@ jobs:
 # ------- START MERGE PROCCESS -------- #
 
   MergeMainORM:
-    needs: PostRelease
+    needs: [PostRelease, TestORM]
     name: Merge Stage with Main
     permissions: write-all
     runs-on: ubuntu-latest
