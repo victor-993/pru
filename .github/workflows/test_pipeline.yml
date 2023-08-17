@@ -72,7 +72,6 @@ jobs:
         DEFAULT_BUMP: patch
         RELEASE_BRANCHES : stage,main
         BRANCH_HISTORY: last
-        
     # Create release
     - name: Create Release
       id: create_release
@@ -107,7 +106,7 @@ jobs:
         sed -i "s/version='.*'/version='${{ steps.taggerDryRun.outputs.new_tag }}'/" setup.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    # Merge stage wiht main 
     - name: Merge stage -> main
       uses: devmasx/merge-branch@master
       with:
