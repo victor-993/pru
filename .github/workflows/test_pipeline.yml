@@ -39,7 +39,9 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/tests/ -p 'test_*.py'
-    
+    - name: exit enviroment
+      run: |
+        deactivate
     - name: Change to main branch
       id: change-to-main
       run: git checkout main
