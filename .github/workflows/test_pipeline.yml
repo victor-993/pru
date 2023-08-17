@@ -39,6 +39,18 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/tests/ -p 'test_*.py'
+    - name: status check
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      run: |
+        if [ ${{ job.status }} == "success" ]; then
+          echo "Tests were successful."
+          gh pr check -s "TestORM" --success
+        else
+          echo "Tests failed."
+          gh pr check -s "TestORM" --failure
+        fi
+
 # ------- END ORM PROCCESS -------- #    
 
 # ------- START MERGE PROCCESS -------- #
