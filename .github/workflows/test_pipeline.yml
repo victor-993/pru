@@ -20,7 +20,7 @@ jobs:
   TestORM:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.9
@@ -61,14 +61,15 @@ jobs:
           target_branch: main
           github_token: ${{ github.token }}
       - name: Change to main branch
+        id: change-to-main
         run: git checkout main
       - name: Create Test Status Check on Main
-        if: startsWith(github.ref, 'refs/heads/main')
         uses: LouisBrunner/checks-action@v1.6.1
         with:
           token: ${{ github.token }}
           name: TestORM
           conclusion: success
+        if: steps.change-to-main.outcome == 'success'
 
 # ------- END MERGE PROCCESS -------- #
 
