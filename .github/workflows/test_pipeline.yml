@@ -38,47 +38,13 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/tests/ -p 'test_*.py'
-    
-    - name: Get Latest Release
-      id: get-release
-      run: |
-        LATEST_RELEASE=$(curl -s "https://api.github.com/repos/${{github.repository}}/releases/latest" | jq -r .tag_name)
-        echo "Latest Release: $LATEST_RELEASE"
-        echo "::set-output name=latest_release::$LATEST_RELEASE"
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
-    - name: Use Latest Release
-      run: |
-        echo "The latest release is ${{ steps.get-release.outputs.latest_release }}"
 
 # ------- END ORM PROCCESS -------- #    
-
-# ------- START MERGE PROCCESS -------- #
-
-  MergeMainORM:
-    needs: TestORM
-    name: Merge Stage with Main
-    permissions: write-all
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@master
-        with:
-          ref: main
-      - name: Merge stage -> main
-        uses: devmasx/merge-branch@master
-        with:
-          type: now
-          head_to_merge: ${{ github.ref }}
-          target_branch: main
-          github_token: ${{ github.token }}
-
-# ------- END MERGE PROCCESS -------- #
 
 # ------- START RELEASE PROCCESS -------- #
 
   PostRelease:
-    needs: [TestORM, MergeMainORM]
+    needs: TestORM
     name: Create Release
     runs-on: ubuntu-latest
     permissions: write-all
@@ -106,6 +72,7 @@ jobs:
         DEFAULT_BUMP: patch
         RELEASE_BRANCHES : stage,main
         BRANCH_HISTORY: last
+        
     # Create release
     - name: Create Release
       id: create_release
@@ -134,16 +101,19 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        ref: main
+        ref: stage
     - name: Update version
       run: |
         sed -i "s/version='.*'/version='${{ steps.taggerDryRun.outputs.new_tag }}'/" setup.py
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Commit changes
-      uses: stefanzweifel/git-auto-commit-action@v4
+
+    - name: Merge stage -> main
+      uses: devmasx/merge-branch@master
       with:
-        commit_message: "Update version to ${{ steps.taggerDryRun.outputs.new_tag }}"
-        push_options: '--force'
+        type: now
+        head_to_merge: ${{ github.ref }}
+        target_branch: main
+        github_token: ${{ github.token }}
 
 # ------- END RELEASE PROCCESS -------- #
