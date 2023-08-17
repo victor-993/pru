@@ -9,7 +9,6 @@ on:
     tags:
     - 'v*'
 
-
 permissions:
   contents: read
 
@@ -39,19 +38,6 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/tests/ -p 'test_*.py'
-    - name: exit enviroment
-      run: |
-        deactivate
-    - name: Change to main branch
-      id: change-to-main
-      run: git checkout main
-    - name: Create Test Status Check on Main
-      uses: LouisBrunner/checks-action@v1.6.1
-      with:
-        token: ${{ github.token }}
-        name: TestORM
-        conclusion: success
-      if: steps.change-to-main.outcome == 'success'
 
 # ------- END ORM PROCCESS -------- #    
 
@@ -145,5 +131,6 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: "Update version to ${{ steps.taggerDryRun.outputs.new_tag }}"
+        push_options: '--force'
 
 # ------- END RELEASE PROCCESS -------- #
