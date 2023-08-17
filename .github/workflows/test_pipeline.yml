@@ -39,6 +39,17 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/tests/ -p 'test_*.py'
+    
+    - name: Change to main branch
+      id: change-to-main
+      run: git checkout main
+    - name: Create Test Status Check on Main
+      uses: LouisBrunner/checks-action@v1.6.1
+      with:
+        token: ${{ github.token }}
+        name: TestORM
+        conclusion: success
+      if: steps.change-to-main.outcome == 'success'
 
 # ------- END ORM PROCCESS -------- #    
 
@@ -60,16 +71,6 @@ jobs:
           head_to_merge: ${{ github.ref }}
           target_branch: main
           github_token: ${{ github.token }}
-      - name: Change to main branch
-        id: change-to-main
-        run: git checkout main
-      - name: Create Test Status Check on Main
-        uses: LouisBrunner/checks-action@v1.6.1
-        with:
-          token: ${{ github.token }}
-          name: TestORM
-          conclusion: success
-        if: steps.change-to-main.outcome == 'success'
 
 # ------- END MERGE PROCCESS -------- #
 
