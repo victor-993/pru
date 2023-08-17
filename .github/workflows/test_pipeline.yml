@@ -39,17 +39,6 @@ jobs:
     - name: Run Tests
       run: |
         python -m unittest discover -s ./src/tests/ -p 'test_*.py'
-    - name: status check
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      run: |
-        if [ ${{ job.status }} == "success" ]; then
-          echo "Tests were successful."
-          gh pr check -s "TestORM" --success
-        else
-          echo "Tests failed."
-          gh pr check -s "TestORM" --failure
-        fi
 
 # ------- END ORM PROCCESS -------- #    
 
@@ -62,7 +51,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-
+        with:
+          ref: main
       - name: Merge stage -> main
         uses: devmasx/merge-branch@master
         with:
@@ -70,6 +60,14 @@ jobs:
           head_to_merge: ${{ github.ref }}
           target_branch: main
           github_token: ${{ github.token }}
+
+      - name: Create Test Status Check on Main
+        if: startsWith(github.ref, 'refs/heads/main')
+        uses: LouisBrunner/checks-action@v1.6.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: Test Basic Success
+          conclusion: success
 
 # ------- END MERGE PROCCESS -------- #
 
@@ -128,8 +126,6 @@ jobs:
         asset_path: ./releaseORM.zip
         asset_name: releaseORM.zip
         asset_content_type: application/zip
-    - name: Get Test Status
-      run: echo "tests-successful=${{ needs.TestORM.outputs.tests-successful }}" >> $GITHUB_ENV
     # update version setup.py
     - name: Checkout code
       uses: actions/checkout@v3
