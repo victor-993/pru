@@ -20,7 +20,9 @@ jobs:
   TestORM:
 
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        branch: [stage, main]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python 3.9
@@ -60,13 +62,14 @@ jobs:
           head_to_merge: ${{ github.ref }}
           target_branch: main
           github_token: ${{ github.token }}
-
+      - name: Change to main branch
+        run: git checkout main
       - name: Create Test Status Check on Main
         if: startsWith(github.ref, 'refs/heads/main')
         uses: LouisBrunner/checks-action@v1.6.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Test Basic Success
+          token: ${{ github.token }}
+          name: TestORM
           conclusion: success
 
 # ------- END MERGE PROCCESS -------- #
