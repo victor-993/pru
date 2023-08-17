@@ -122,6 +122,7 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         name: TestORM
+        conclusion: success
     # update version setup.py
     - name: Checkout code
       uses: actions/checkout@v3
